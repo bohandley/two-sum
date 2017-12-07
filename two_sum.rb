@@ -1,9 +1,13 @@
 require 'benchmark'
 
+arr = [2,3,4,5,6,7,8,9]
+tar = 17
+
 # Brute Force
 # The time complexity for this method is O(n^2). 
 # We iterate through the array, then compare each value to a 
 # second loop through the array searching for the complement.
+# The space complexity for this method is O(1).
 def brute_force_two_sum(array, target)
   indexes = []
   array.each.with_index do |n1, index1|
@@ -14,6 +18,18 @@ def brute_force_two_sum(array, target)
   indexes
 end
 
+# Benchmark test
+puts 'brute_force_two_sum'
+puts Benchmark.measure{brute_force_two_sum(arr, tar)}
+
+# Map elements and indexes to a hash, then iterate through the array
+# The time complexity for this method is O(n)
+# We map each element of the array and its index to the hash.
+# Then we loop through the array and check if the complement 
+# of each element exists in the hash. The time complexity for each lookup in 
+# the hash is O(1).
+# The space complexity is O(n)
+# n is the amount of elements stored in the hash.
 def map_then_iterate_two_sum(array, target)
     hash = {}
     array.each.with_index do |i, index|
@@ -29,6 +45,17 @@ def map_then_iterate_two_sum(array, target)
     end
 end
 
+puts 'map_then_iterate_two_sum'
+puts Benchmark.measure{map_then_iterate_two_sum(arr, tar)}
+
+# Loop through the array and insert elements into the hash within the same loop.
+# The time complexity for this is O(n)
+# In this method, we create an empty hash, loop through the array,
+# identify each elements complement, look up the complement in the hash,
+# then map the element and the index to the hash. We map the element and index last
+# because we want to find the first complement to the element, but if we mapped first, 
+# the element would already exist in the hash.
+# The space complexity is O(n)
 def one_pass_two_sum(array, target)
   hash = {}
   array.each.with_index do |i, index|
@@ -40,8 +67,6 @@ def one_pass_two_sum(array, target)
   end
 end
 
-
-
-
-
+puts 'one_pass_two_sum'
+puts puts Benchmark.measure{one_pass_two_sum(arr, tar)}
 
